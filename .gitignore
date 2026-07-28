@@ -220,4 +220,7 @@ __marimo__/
 # Internal planning docs (never shipped)
 .internal/
 
+# Runtime state (channel source checkpoints, etc.) - not shipped
+var/
+
 venv/

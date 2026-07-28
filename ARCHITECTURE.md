@@ -20,6 +20,16 @@ nothing else in the project needs to change.
   an answer); `llm/openai_compatible.py` covers Ollama, OpenAI, DeepSeek,
   and any OpenAI-compatible endpoint today. A future MCP-based method is
   a new file here, same contract.
+- **Channel sources** (`channel_sources/`) — polling for platforms with no
+  native Chatwoot channel and no webhook. `channel_sources/base.py`
+  defines the contract (`fetch_new_items()`, `post_reply()`).
+  `channel_sources/generic_api.py` is a config-driven implementation for
+  any simple header-auth JSON API - URL, auth, and field mappings all
+  come from `.env`, no code per source. A source needing real auth logic
+  (OAuth, token refresh) gets its own file instead, same contract.
+  `channel_sources/checkpoint.py` gives every source a shared, per-source
+  local record of the last-seen item id, so repeated polls never
+  reprocess old items.
 
 ## Flow
 
