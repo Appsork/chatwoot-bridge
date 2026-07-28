@@ -29,7 +29,8 @@ nothing else in the project needs to change.
   (OAuth, token refresh) gets its own file instead, same contract.
   `channel_sources/checkpoint.py` gives every source a shared, per-source
   local record of the last-seen item id, so repeated polls never
-  reprocess old items.
+  reprocess old items. Every implementation enforces basic content
+  safety at fetch time, per CLAUDE.md.
 
 ## Flow
 
