@@ -1,2 +1,30 @@
 # chatwoot-bridge
 Connects Chatwoot to any LLM (Ollama, OpenAI, DeepSeek, etc.) for AI-assisted replies using your own docs and past conversations. Independent project, not affiliated with Chatwoot.
+
+## Webhook delivery and private networks
+
+Chatwoot's webhook delivery (`WebhookJob`) runs every webhook URL through
+`SafeFetch`, which rejects any URL resolving to a private IP address
+unless `SAFE_FETCH_ALLOW_PRIVATE_NETWORK=true` is set on the Chatwoot
+side. Whether you need this depends on your deployment:
+
+1. **Chatwoot self-hosted + chatwoot-bridge on the same private network**
+   (e.g. same LAN, same Docker host) - requires
+   `SAFE_FETCH_ALLOW_PRIVATE_NETWORK=true` in Chatwoot's own `.env`
+   (`rails` and `sidekiq` services), applied with `docker compose up -d
+   rails sidekiq` (a plain `restart` does not pick up new env vars).
+2. **Chatwoot self-hosted + chatwoot-bridge on a public server** (VPS,
+   domain name) - no special setting needed.
+3. **Chatwoot Cloud + chatwoot-bridge on a public server** - no special
+   setting needed.
+4. **Chatwoot Cloud + chatwoot-bridge on a private network** - not
+   possible. Chatwoot Cloud's SSRF guard cannot be disabled by an
+   individual customer, so chatwoot-bridge must be publicly reachable
+   in this case.
+
+`SAFE_FETCH_ALLOW_PRIVATE_NETWORK` is not webhook-specific - it is a
+single shared toggle that also loosens SSRF protection for Chatwoot's
+avatar-from-URL, website-branding-fetch, and upload-by-URL features.
+Evaluate your own threat model (multi-user instance vs. a trusted
+single-user/admin instance) before enabling it, rather than treating it
+as a webhook-only setting.
