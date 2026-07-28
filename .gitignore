@@ -216,4 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-docs/
+
+# Internal planning docs (never shipped)
+.internal/
+
+venv/
