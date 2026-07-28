@@ -32,6 +32,24 @@ class ConnectorBase(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def create_contact(self, inbox_id: int, name: str, identifier: str) -> dict:
+        """Create a contact attached to inbox_id, identified by a caller-chosen unique identifier.
+
+        Used by core/poller.py to represent an external item's author as a
+        contact before a conversation can be created for it.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def create_conversation(self, inbox_id: int, contact_id: int, source_id: str) -> dict:
+        """Create a new conversation in inbox_id for an existing contact.
+
+        Used by core/poller.py after create_contact() to open a conversation
+        for a polled item, before post_note() drafts a reply into it.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     def post_note(self, conversation_id: int, content: str) -> dict:
         """Post a private note (never auto-sent to the customer) to a conversation."""
         raise NotImplementedError
