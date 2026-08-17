@@ -1,6 +1,19 @@
 # chatwoot-bridge
 Connects Chatwoot to any LLM (Ollama, OpenAI, DeepSeek, etc.) for AI-assisted replies using your own docs and past conversations. Independent project, not affiliated with Chatwoot.
 
+## Setup
+
+See [`docs/setup.md`](docs/setup.md) for required `.env` values and
+first-run instructions, and [`docs/troubleshooting.md`](docs/troubleshooting.md)
+for common issues.
+
+## Project structure
+
+- `src/chatwoot_bridge/` — the service (connectors, LLM access, memory/RAG, orchestration, webhook API)
+- `docs/` — setup and troubleshooting docs
+- `scripts/` — standalone scripts for verifying each piece of the stack against a real endpoint
+- `tests/` — unit tests
+
 ## Webhook delivery and private networks
 
 Chatwoot's webhook delivery (`WebhookJob`) runs every webhook URL through

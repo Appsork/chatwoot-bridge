@@ -1,0 +1,20 @@
+services:
+  chatwoot-bridge:
+    build: .
+    restart: always
+    volumes:
+      - ./.env:/app/.env:ro
+    environment:
+      # Overrides for hostnames only reachable via Chatwoot's own docker
+      # network - .env itself stays host-facing (127.0.0.1 / LAN IP) for
+      # scripts run directly on the host. See config.load_env().
+      VECTOR_DB_URL: "postgresql://chatwoot_bridge:${VECTOR_DB_PASSWORD}@postgres:5432/rag_memory"
+      CHATWOOT_URL: "http://rails:3000"
+    ports:
+      - "8001:8001"
+    networks:
+      - chatwoot_default
+
+networks:
+  chatwoot_default:
+    external: true
