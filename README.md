@@ -41,3 +41,10 @@ avatar-from-URL, website-branding-fetch, and upload-by-URL features.
 Evaluate your own threat model (multi-user instance vs. a trusted
 single-user/admin instance) before enabling it, rather than treating it
 as a webhook-only setting.
+
+**Development notes:** Parts of this project were developed with
+the assistance of AI coding tools.
+
+This software is provided "as is," without warranty of any kind,
+per the MIT License below. Review and test it in your own
+environment before relying on it in production.
