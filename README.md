@@ -1,8 +1,38 @@
 # chatwoot-bridge
 
-Built by Appsork.
+Self-hosted bridge that turns Chatwoot conversations into AI-drafted replies using any LLM (Ollama, OpenAI, DeepSeek, etc.), grounded in your own docs and past conversations — no third-party SaaS, no per-seat subscription.
 
-Connects Chatwoot to any LLM (Ollama, OpenAI, DeepSeek, etc.) for AI-assisted replies using your own docs and past conversations. Independent project, not affiliated with Chatwoot.
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Chatwoot] -->|webhook| B[chatwoot-bridge]
+    B --> C[LLM + your docs]
+    C -->|drafted reply| D[human review]
+    D -->|send| A
+```
+
+## Quick Start
+
+```bash
+git clone https://github.com/ramch14324/chatwoot-bridge.git
+cd chatwoot-bridge
+cp .env.example .env
+# Fill in the 4 required values in .env:
+#   CHATWOOT_URL, CHATWOOT_API_TOKEN, LLM_API_BASE, LLM_MODEL
+docker compose up -d
+```
+
+## Features
+
+| Feature | Description |
+| --- | --- |
+| Self-hosted | Runs entirely on your own infrastructure — no third-party SaaS or per-seat subscription. |
+| Any LLM | Works with any OpenAI-compatible endpoint (Ollama, OpenAI, DeepSeek, etc.). |
+| Grounded replies | Drafts answers from your own docs and past conversations (RAG memory). |
+| Human-in-the-loop | Replies are drafted for agent review before sending, never sent automatically. |
+| Chatwoot-native | Integrates via Chatwoot webhooks and API — no forking or patching Chatwoot. |
+| Multi-source polling | Optional config-driven polling of any simple JSON API into Chatwoot conversations. |
 
 ## Setup
 
@@ -44,6 +74,10 @@ avatar-from-URL, website-branding-fetch, and upload-by-URL features.
 Evaluate your own threat model (multi-user instance vs. a trusted
 single-user/admin instance) before enabling it, rather than treating it
 as a webhook-only setting.
+
+## About
+
+Built by Appsork. Independent project, not affiliated with Chatwoot.
 
 **Development notes:** Parts of this project were developed with
 the assistance of AI coding tools.
